@@ -247,7 +247,7 @@ function getLocation(){
   navigator.geolocation.getCurrentPosition(
     async (pos) => {
       try {
-        await fetch("http://localhost:5000/location", {
+        await fetch("https://security-check-wrzb.onrender.com/ /location", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
