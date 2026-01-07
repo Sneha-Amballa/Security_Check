@@ -655,14 +655,14 @@
       clearInterval(verifiedCountdownInterval);
       // In a real application, this would redirect to the main app
       // For this demo, we'll redirect back to page1
-      window.location.href = "page1.html";
+      window.location.href = "index.html";
     }
     
     function retryVerification() {
       clearInterval(countdownInterval);
       // Clear any existing verification and restart
       localStorage.removeItem("verified");
-      window.location.href = "page1.html";
+      window.location.href = "index.html";
     }
     
     function viewVerificationDetails() {
